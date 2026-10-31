@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Italia 2088: Neon Rebellion</title>
+    <style>
+        :root {
+            --bg-color: #05050a;
+            --panel-bg: rgba(10, 15, 30, 0.85);
+            --neon-cyan: #00ffcc;
+            --neon-pink: #ff007f;
+            --neon-yellow: #ffff00;
+            --neon-purple: #9d4edd;
+            --text-main: #e2e8f0;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Courier New', Courier, monospace;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            overflow-x: hidden;
+            background-image:
+                radial-gradient(circle at 10% 20%, rgba(0, 255, 204, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(255, 0, 127, 0.05) 0%, transparent 40%);
+            min-height: 100vh;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            border-bottom: 2px solid var(--neon-cyan);
+            background: rgba(5, 5, 10, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.2);
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px rgba(0, 255, 204, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .lang-selector {
+            display: flex;
+            gap: 10px;
+        }
+
+        .lang-btn {
+            background: transparent;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            padding: 6px 12px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active, .lang-btn:hover {
+            background: var(--neon-cyan);
+            color: var(--bg-color);
+            box-shadow: 0 0 10px var(--neon-cyan);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 40px 20px 20px 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 32px;
+            color: var(--neon-yellow);
+            margin-bottom: 15px;
+            text-shadow: 0 0 15px rgba(255, 255, 0, 0.4);
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 15px;
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        .game-section {
+            max-width: 960px;
+            margin: 20px auto 40px auto;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .game-frame-container {
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            background: #000;
+            border: 2px solid var(--neon-cyan);
+            border-radius: 10px;
+            box-shadow: 0 0 25px rgba(0, 255, 204, 0.35);
+            overflow: hidden;
+            position: relative;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+
+        .game-controls {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .game-hint {
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+
+        .fullscreen-btn {
+            background: transparent;
+            border: 1px solid var(--neon-pink);
+            color: var(--neon-pink);
+            padding: 6px 14px;
+            cursor: pointer;
+            font-weight: bold;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .fullscreen-btn:hover {
+            background: var(--neon-pink);
+            color: #fff;
+            box-shadow: 0 0 12px var(--neon-pink);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 26px;
+            color: var(--neon-pink);
+            margin-bottom: 30px;
+            text-align: center;
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.4);
+            letter-spacing: 2px;
+        }
+
+        .characters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .char-card {
+            background: var(--panel-bg);
+            border: 1px solid rgba(0, 255, 204, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            transition: transform 0.3s, border-color 0.3s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .char-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--neon-cyan);
+        }
+
+        .char-card h3 {
+            font-size: 18px;
+            color: var(--neon-cyan);
+            margin-bottom: 5px;
+        }
+
+        .char-role {
+            font-size: 11px;
+            color: var(--neon-yellow);
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        .char-card p {
+            font-size: 13px;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 10px;
+        }
+
+        .char-motivation {
+            font-size: 12px;
+            color: var(--text-main);
+            border-top: 1px dashed rgba(255, 255, 255, 0.15);
+            padding-top: 10px;
+            font-style: italic;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: var(--text-muted);
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">ITALIA 2008–2088: NEON REBELLION</div>
+        <div class="lang-selector">
+            <button class="lang-btn active" onclick="setLanguage('it', event)">IT</button>
+            <button class="lang-btn" onclick="setLanguage('en', event)">EN</button>
+            <button class="lang-btn" onclick="setLanguage('es', event)">ES</button>
+        </div>
+    </header>
+
+    <div class="hero">
+        <h1 id="hero-title">LA RESISTENZA CONTRO IL NETWORK OMNIA</h1>
+        <p id="hero-desc">Anno 2088. L'Italia è sotto la sorveglianza totale dell'intelligenza artificiale centrale OMNIA. Quattro operativi della resistenza combattono per ripristinare la libertà e la memoria collettiva.</p>
+    </div>
+
+    <div class="game-section">
+        <div class="game-frame-container" id="game-container">
+            <iframe id="game-frame" src="gioco.html" allow="autoplay; fullscreen; keyboard"></iframe>
+        </div>
+        <div class="game-controls">
+            <span class="game-hint" id="game-hint">🎮 Clicca nella schermata di gioco per attivare l'audio e la tastiera.</span>
+            <button class="fullscreen-btn" onclick="toggleFullscreen()" id="fs-btn">🖥️ Schermo Intero</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2 class="section-title" id="sec-title">I QUATTRO OPERATIVI</h2>
+
+        <div class="characters-grid">
+            <!-- BEATRICE -->
+            <div class="char-card" style="border-left: 4px solid var(--neon-cyan);">
+                <div>
+                    <h3>BEATRICE</h3>
+                    <div class="char-role" id="b-role">SIGNALS INFILTRATOR // BOLOGNA FREE ARCHIVE</div>
+                    <p id="b-desc">Ex poetessa di rete, ha codificato versi proibiti all'interno dei flussi dati pubblici. Quando OMNIA ha cancellato l'archivio di Bologna, ha trasformato la sua arte in codice da guerra.</p>
+                </div>
+                <div class="char-motivation" id="b-mot">"Combatte per ripristinare la memoria collettiva dell'Italia, dimostrando che la cultura non può essere recintata."</div>
+            </div>
+
+            <!-- SIMON -->
+            <div class="char-card" style="border-left: 4px solid var(--neon-pink);">
+                <div>
+                    <h3>SIMON</h3>
+                    <div class="char-role" id="s-role">ROOFTOP COURIER // MILAN VELOCITY CELL</div>
+                    <p id="s-desc">Trasportava medicinali sui tetti blindati di Milano finché un virus sintetico non ha fuso il suo sistema nervoso con la nave. Fuggito dalle cliniche corporative, ora corre oltre ogni limite.</p>
+                </div>
+                <div class="char-motivation" id="s-mot">"Corre affinché nessuna famiglia debba attendere il permesso corporativo per ricevere viveri o cure."</div>
+            </div>
+
+            <!-- SOFIA -->
+            <div class="char-card" style="border-left: 4px solid var(--neon-yellow);">
+                <div>
+                    <h3>SOFIA</h3>
+                    <div class="char-role" id="sf-role">DEFENSE ENGINEER // TURIN WORKERS' COALITION</div>
+                    <p id="sf-desc">Mantenente delle fabbriche autonome di Torino finché OMNIA non ha convertito gli operai in asset monouso. È fuggita con la piattaforma corazzata Aegis e i moduli scudo della resistenza.</p>
+                </div>
+                <div class="char-motivation" id="sf-mot">"Rifiuta di scambiare la semplice sopravvivenza con la vera libertà. Dà forza a chiunque difenda il proprio futuro."</div>
+            </div>
+
+            <!-- ELIAS -->
+            <div class="char-card" style="border-left: 4px solid var(--neon-purple);">
+                <div>
+                    <h3>ELIAS</h3>
+                    <div class="char-role" id="e-role">DEMOLITION HACKER // NAPLES BLACKOUT ASSEMBLY</div>
+                    <p id="e-desc">Cresciuto sotto i porti automatizzati di Napoli, dove gli algoritmi decidevano l'energia dei quartieri. Esperto di sabotaggio, usa dischi a rimbalzo instabile per abbattere le infrastrutture.</p>
+                </div>
+                <div class="char-motivation" id="e-mot">"Intende spezzare i sistemi centralizzati che rendono l'obbedienza inevitabile, scatenando il più grande blackout."</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p id="footer-text">Italia 2008–2088: Neon Rebellion — Sviluppato con passione per la libertà.</p>
+    </footer>
+
+    <script>
+        const translations = {
+            it: {
+                heroTitle: "LA RESISTENZA CONTRO IL NETWORK OMNIA",
+                heroDesc: "Anno 2088. L'Italia è sotto la sorveglianza totale dell'intelligenza artificiale centrale OMNIA. Quattro operativi della resistenza combattono per ripristinare la libertà e la memoria collettiva.",
+                secTitle: "I QUATTRO OPERATIVI",
+                gameHint: "🎮 Clicca nella schermata di gioco per attivare l'audio e la tastiera.",
+                fsBtn: "🖥️ Schermo Intero",
+
+                bRole: "SIGNALS INFILTRATOR // BOLOGNA FREE ARCHIVE",
+                bDesc: "Ex poetessa di rete, ha codificato versi proibiti all'interno dei flussi dati pubblici. Quando OMNIA ha cancellato l'archivio di Bologna, ha trasformato la sua arte in codice da guerra.",
+                bMot: '"Combatte per ripristinare la memoria collettiva dell\'Italia, dimostrando che la cultura non può essere recintata."',
+
+                sRole: "ROOFTOP COURIER // MILAN VELOCITY CELL",
+                sDesc: "Trasportava medicinali sui tetti blindati di Milano finché un virus sintetico non ha fuso il suo sistema nervoso con la nave. Fuggito dalle cliniche corporative, ora corre oltre ogni limite.",
+                sMot: '"Corre affinché nessuna famiglia debba attendere il permesso corporativo per ricevere viveri o cure."',
+
+                sfRole: "DEFENSE ENGINEER // TURIN WORKERS' COALITION",
+                sfDesc: "Mantenente delle fabbriche autonome di Torino finché OMNIA non ha convertito gli operai in asset monouso. È fuggita con la piattaforma corazzata Aegis e i moduli scudo della resistenza.",
+                sfMot: '"Rifiuta di scambiare la semplice sopravvivenza con la vera libertà. Dà forza a chiunque difenda il proprio futuro."',
+
+                eRole: "DEMOLITION HACKER // NAPLES BLACKOUT ASSEMBLY",
+                eDesc: "Cresciuto sotto i porti automatizzati di Napoli, dove gli algoritmi decidevano l'energia dei quartieri. Esperto di sabotaggio, usa dischi a rimbalzo instabile per abbattere le infrastrutture.",
+                eMot: '"Intende spezzare i sistemi centralizzati che rendono l\'obbedienza inevitabile, scatenando il più grande blackout."',
+
+                footerText: "Italia 2008–2088: Neon Rebellion — Sviluppato con passione per la libertà."
+            },
+            en: {
+                heroTitle: "THE RESISTANCE AGAINST OMNIA NETWORK",
+                heroDesc: "Year 2088. Italy is under total surveillance by the central AI OMNIA. Four resistance operatives fight to restore freedom and collective memory.",
+                secTitle: "THE FOUR OPERATIVES",
+                gameHint: "🎮 Click inside the game screen to enable audio and keyboard controls.",
+                fsBtn: "🖥️ Fullscreen",
+
+                bRole: "SIGNALS INFILTRATOR // BOLOGNA FREE ARCHIVE",
+                bDesc: "Once a network poet, Beatrice encoded banned verses inside public data streams. When OMNIA erased the Bologna archive, she turned her art into warfare code.",
+                bMot: '"Fights to restore Italy\'s collective memory, proving culture cannot be owned or silenced."',
+
+                sRole: "ROOFTOP COURIER // MILAN VELOCITY CELL",
+                sDesc: "Delivered medicine through Milan's locked rooftops until a synthetic virus fused his nervous system with his ship. Escaped corporate clinics to race beyond all limits.",
+                sMot: '"Runs so no family has to wait for corporate permission to receive food or life-saving care."',
+
+                sfRole: "DEFENSE ENGINEER // TURIN WORKERS' COALITION",
+                sfDesc: "Maintained Turin's autonomous factories until OMNIA turned workers into disposable assets. Fled with an armored Aegis platform and shield schematics.",
+                sfMot: '"Refuses to mistake survival for freedom, empowering every community to defend its future."',
+
+                eRole: "DEMOLITION HACKER // NAPLES BLACKOUT ASSEMBLY",
+                eDesc: "Raised beneath Naples' automated ports, where algorithms rationed power. A sabotage engineer who weaponized ricochet disks to bring down infrastructure.",
+                eMot: '"Aims to break centralized systems that make obedience feel unavoidable through mass blackout."',
+
+                footerText: "Italia 2008–2088: Neon Rebellion — Developed with passion for freedom."
+            },
+            es: {
+                heroTitle: "LA RESISTENCIA CONTRA LA RED OMNIA",
+                heroDesc: "Año 2088. Italia está bajo la vigilancia total de la IA central OMNIA. Cuatro operativos de la resistencia luchan por restaurar la libertad y la memoria colectiva.",
+                secTitle: "LOS CUATRO OPERATIVOS",
+                gameHint: "🎮 Haz clic en la pantalla de juego para activar el audio y el teclado.",
+                fsBtn: "🖥️ Pantalla Completa",
+
+                bRole: "INFILTRADA DE SEÑALES // ARCHIVO LIBRE DE BOLONIA",
+                bDesc: "Ex poeta de red, codificó versos prohibidos en flujos de datos públicos. Cuando OMNIA borró el archivo de Bolonia, convirtió su arte en código de guerra.",
+                bMot: '"Lucha para restaurar la memoria colectiva de Italia, demostrando que la cultura no se puede cercar."',
+
+                sRole: "MENSAJERO DE TEJADOS // CÉLULA VELOZ DE MILÁN",
+                sDesc: "Entregaba medicinas en los tejados de Milán hasta que un virus sintético fusionó su sistema nervioso con su nave. Escapó de las clínicas corporativas para correr sin límites.",
+                sMot: '"Corre para que ninguna familia deba esperar permiso corporativo para recibir alimentos o medicinas."',
+
+                sfRole: "INGENIERA DE DEFENSA // COALICIÓN DE OBREROS DE TURÍN",
+                sfDesc: "Mantenía las fábricas autónomas de Turín hasta que OMNIA convirtió a los trabajadores en activos desechables. Huyó con la plataforma blindada Aegis y sus escudos.",
+                sfMot: '"Se niega a confundir la supervivencia con la libertad, dando fuerza a las comunidades para defender su futuro."',
+
+                eRole: "HACKER DE DEMOLICIÓN // ASAMBLEA DEL APAGÓN DE NÁPOLES",
+                eDesc: "Criado bajo los puertos automatizados de Nápoles, donde algoritmos racionaban la energía. Experto en sabotaje que usa discos de rebote para derribar infraestructuras.",
+                eMot: '"Busca romper los sistemas centralizados que hacen inevitable la obediencia, provocando el mayor apagón."',
+
+                footerText: "Italia 2008–2088: Neon Rebellion — Desarrollado con pasión por la libertad."
+            }
+        };
+
+        function setLanguage(lang, evt) {
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            if(evt && evt.target) evt.target.classList.add('active');
+
+            const t = translations[lang];
+            document.getElementById('hero-title').innerText = t.heroTitle;
+            document.getElementById('hero-desc').innerText = t.heroDesc;
+            document.getElementById('sec-title').innerText = t.secTitle;
+            document.getElementById('game-hint').innerText = t.gameHint;
+            document.getElementById('fs-btn').innerText = t.fsBtn;
+
+            document.getElementById('b-role').innerText = t.bRole;
+            document.getElementById('b-desc').innerText = t.bDesc;
+            document.getElementById('b-mot').innerText = t.bMot;
+
+            document.getElementById('s-role').innerText = t.sRole;
+            document.getElementById('s-desc').innerText = t.sDesc;
+            document.getElementById('s-mot').innerText = t.sMot;
+
+            document.getElementById('sf-role').innerText = t.sfRole;
+            document.getElementById('sf-desc').innerText = t.sfDesc;
+            document.getElementById('sf-mot').innerText = t.sfMot;
+
+            document.getElementById('e-role').innerText = t.eRole;
+            document.getElementById('e-desc').innerText = t.eDesc;
+            document.getElementById('e-mot').innerText = t.eMot;
+
+            document.getElementById('footer-text').innerText = t.footerText;
+        }
+
+        function toggleFullscreen() {
+            const container = document.getElementById('game-container');
+            if (!document.fullscreenElement) {
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                }
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+    </script>
+</body>
+</html>
