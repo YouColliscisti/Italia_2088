@@ -49,14 +49,25 @@ jobs:
           python -m pip install --upgrade pip
           pip install pygame pyinstaller
 
-      - name: Build Single Executable (Mac)
+      - name: Build Mac App Bundle
         run: |
-          pyinstaller --noconsole --onefile --name "Italia2088" --paths=src --add-data "assets:assets" --add-data "src:src" main.py
-          chmod +x dist/Italia2088
-          cd dist && zip -r Italia2088-Mac.zip Italia2088
+          pyinstaller --windowed --name "Italia 2088" --paths=src --add-data "assets:assets" --add-data "src:src" main.py
+
+      - name: Create DMG with Auto-Open
+        run: |
+          brew install create-dmg
+          
+          # Crea il DMG
+          create-dmg \
+            --volname "Italia 2088" \
+            --window-size 500 300 \
+            --icon-size 120 \
+            --icon "Italia 2088.app" 250 150 \
+            "Italia2088.dmg" \
+            "dist/"
 
       - name: Upload Mac Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: mac-app
-          path: dist/Italia2088-Mac.zip
+          name: mac-dmg
+          path: Italia2088.dmg
