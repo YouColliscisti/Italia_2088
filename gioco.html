@@ -107,9 +107,9 @@
         .game-frame-container {
             width: 100%;
             background: #05050a;
-            border: 2px solid var(--neon-cyan);
+            border: 2px solid var(--neon-purple);
             border-radius: 10px;
-            box-shadow: 0 0 25px rgba(0, 255, 204, 0.35);
+            box-shadow: 0 0 25px rgba(157, 78, 221, 0.35);
             overflow: hidden;
             position: relative;
             display: flex;
@@ -121,10 +121,10 @@
         }
 
         .standby-title {
-            color: var(--neon-cyan);
+            color: var(--neon-purple);
             margin-bottom: 15px;
             font-size: 24px;
-            text-shadow: 0 0 10px rgba(0, 255, 204, 0.4);
+            text-shadow: 0 0 10px rgba(157, 78, 221, 0.4);
             letter-spacing: 1px;
         }
 
@@ -137,44 +137,35 @@
         }
 
         .download-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            display: flex;
+            justify-content: center;
             width: 100%;
-            max-width: 750px;
+            max-width: 450px;
             margin-bottom: 20px;
         }
 
         .download-box {
-            background: rgba(0, 255, 204, 0.03);
-            border: 1px solid rgba(0, 255, 204, 0.25);
+            background: rgba(157, 78, 221, 0.03);
+            border: 1px solid rgba(157, 78, 221, 0.25);
             border-radius: 8px;
-            padding: 20px;
+            padding: 25px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-        }
-
-        .download-box.mac-box {
-            background: rgba(157, 78, 221, 0.03);
-            border: 1px solid rgba(157, 78, 221, 0.25);
+            width: 100%;
         }
 
         .download-box h4 {
-            color: var(--neon-cyan);
+            color: var(--neon-purple);
             margin-bottom: 10px;
             font-size: 16px;
-        }
-
-        .download-box.mac-box h4 {
-            color: var(--neon-purple);
         }
 
         .download-box p {
             font-size: 12px;
             color: var(--text-muted);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             line-height: 1.4;
         }
 
@@ -185,27 +176,17 @@
             font-size: 14px;
             font-weight: bold;
             letter-spacing: 1px;
-            background: var(--neon-cyan);
+            background: var(--neon-purple);
             color: var(--bg-color);
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            box-shadow: 0 0 15px rgba(0, 255, 204, 0.4);
+            box-shadow: 0 0 15px rgba(157, 78, 221, 0.4);
             transition: all 0.25s ease;
         }
 
         .start-btn:hover {
             transform: scale(1.03);
-            background: #fff;
-            box-shadow: 0 0 25px var(--neon-cyan);
-        }
-
-        .start-btn.mac-btn {
-            background: var(--neon-purple);
-            box-shadow: 0 0 15px rgba(157, 78, 221, 0.4);
-        }
-
-        .start-btn.mac-btn:hover {
             background: #fff;
             box-shadow: 0 0 25px var(--neon-purple);
             color: var(--bg-color);
@@ -219,7 +200,7 @@
             color: var(--neon-pink);
             font-size: 12px;
             background: rgba(255, 0, 127, 0.05);
-            max-width: 750px;
+            max-width: 450px;
             width: 100%;
         }
 
@@ -353,35 +334,26 @@
         <div class="game-frame-container" id="game-container">
             <h3 class="standby-title" id="st-title">⚡ PROTOCOLLO DI SCARICAMENTO</h3>
             <p class="standby-desc" id="st-desc">
-                Il nucleo web è protetto dal protocollo OMNIA. Scegli il pacchetto di download diretto per il tuo sistema operativo.
+                Il nucleo web è protetto dal protocollo OMNIA. Scarica la versione nativa dedicata agli utenti macOS.
             </p>
             
             <div class="download-grid">
-                <!-- Windows Version -->
+                <!-- Mac Version -->
                 <div class="download-box">
-                    <h4 id="win-box-title">🪟 UTENTI WINDOWS</h4>
-                    <p id="win-box-desc">Scarica direttamente l'eseguibile pronto all'uso. Nessuna installazione richiesta.</p>
-                    <a href="dist/main.exe" download class="start-btn" id="dl-win-btn">
-                        📥 SCARICA .EXE
-                    </a>
-                </div>
-
-                <!-- Mac Version (.dmg o pacchetto Mac) -->
-                <div class="download-box mac-box">
                     <h4 id="mac-box-title">🍏 UTENTI macOS</h4>
                     <p id="mac-box-desc">Scarica il pacchetto per Mac. Installazione rapida e immediata con un clic.</p>
-                    <a href="dist/italia_2088.dmg" download class="start-btn mac-btn" id="dl-mac-btn">
-                        📥 SCARICA .DMG
+                    <a href="dist/mac-app/main" download class="start-btn" id="dl-mac-btn">
+                        📥 SCARICA MAC APP
                     </a>
                 </div>
             </div>
             
             <div class="standby-box" id="st-box">
-                🔒 Pacchetto protetto: Distribuzione nativa diretta per Windows e macOS.
+                🔒 Pacchetto protetto: Distribuzione nativa diretta per macOS.
             </div>
         </div>
         <div class="game-controls">
-            <span class="game-hint" id="game-hint">🎮 Stato del sistema: Download diretto multi-piattaforma attivo.</span>
+            <span class="game-hint" id="game-hint">🎮 Stato del sistema: Download diretto macOS attivo.</span>
             <button class="fullscreen-btn" onclick="toggleFullscreen()" id="fs-btn">🖥️ Schermo Intero</button>
         </div>
     </div>
@@ -442,16 +414,13 @@
                 heroTitle: "LA RESISTENZA CONTRO IL NETWORK OMNIA",
                 heroDesc: "Anno 2088. L'Italia è sotto la sorveglianza totale dell'intelligenza artificiale centrale OMNIA. Quattro operativi della resistenza combattono per ripristinare la libertà e la memoria collettiva.",
                 stTitle: "⚡ PROTOCOLLO DI SCARICAMENTO",
-                stDesc: "Il nucleo web è protetto dal protocollo OMNIA. Scegli il pacchetto di download diretto per il tuo sistema operativo.",
-                winBoxTitle: "🪟 UTENTI WINDOWS",
-                winBoxDesc: "Scarica direttamente l'eseguibile pronto all'uso. Nessuna installazione richiesta.",
+                stDesc: "Il nucleo web è protetto dal protocollo OMNIA. Scarica la versione nativa dedicata agli utenti macOS.",
                 macBoxTitle: "🍏 UTENTI macOS",
                 macBoxDesc: "Scarica il pacchetto per Mac. Installazione rapida e immediata con un clic.",
-                dlWinBtn: "📥 SCARICA .EXE",
-                dlMacBtn: "📥 SCARICA .DMG",
-                stBox: "🔒 Pacchetto protetto: Distribuzione nativa diretta per Windows e macOS.",
+                dlMacBtn: "📥 SCARICA MAC APP",
+                stBox: "🔒 Pacchetto protetto: Distribuzione nativa diretta per macOS.",
                 secTitle: "I QUATTRO OPERATIVI",
-                gameHint: "🎮 Stato del sistema: Download diretto multi-piattaforma attivo.",
+                gameHint: "🎮 Stato del sistema: Download diretto macOS attivo.",
                 fsBtn: "🖥️ Schermo Intero",
 
                 bRole: "SIGNALS INFILTRATOR // BOLOGNA FREE ARCHIVE",
@@ -476,16 +445,13 @@
                 heroTitle: "THE RESISTANCE AGAINST OMNIA NETWORK",
                 heroDesc: "Year 2088. Italy is under total surveillance by the central AI OMNIA. Four resistance operatives fight to restore freedom and collective memory.",
                 stTitle: "⚡ DOWNLOAD PROTOCOL",
-                stDesc: "The web core is protected by the OMNIA protocol. Choose the direct download package for your operating system.",
-                winBoxTitle: "🪟 WINDOWS USERS",
-                winBoxDesc: "Directly download the ready-to-use executable. No installation required.",
+                stDesc: "The web core is protected by the OMNIA protocol. Download the native version for macOS users.",
                 macBoxTitle: "🍏 macOS USERS",
                 macBoxDesc: "Download the Mac package. Fast and immediate setup with a single click.",
-                dlWinBtn: "📥 DOWNLOAD .EXE",
-                dlMacBtn: "📥 DOWNLOAD .DMG",
-                stBox: "🔒 Protected package: Direct native distribution for Windows and macOS.",
+                dlMacBtn: "📥 DOWNLOAD MAC APP",
+                stBox: "🔒 Protected package: Direct native distribution for macOS.",
                 secTitle: "THE FOUR OPERATIVES",
-                gameHint: "🎮 System status: Direct multi-platform download active.",
+                gameHint: "🎮 System status: Direct macOS download active.",
                 fsBtn: "🖥️ Fullscreen",
 
                 bRole: "SIGNALS INFILTRATOR // BOLOGNA FREE ARCHIVE",
@@ -510,16 +476,13 @@
                 heroTitle: "LA RESISTENCIA CONTRA LA RED OMNIA",
                 heroDesc: "Año 2088. Italia está bajo la vigilancia total de la IA central OMNIA. Cuatro operativos de la resistencia luchan por restaurar la libertad y la memoria colectiva.",
                 stTitle: "⚡ PROTOCOLO DE DESCARGA",
-                stDesc: "El núcleo web está protegido por el protocolo OMNIA. Elige el paquete de descarga directa para tu sistema operativo.",
-                winBoxTitle: "🪟 USUARIOS DE WINDOWS",
-                winBoxDesc: "Descarga directamente el ejecutable listo para usar. Sin instalación requerida.",
+                stDesc: "El núcleo web está protegido por el protocolo OMNIA. Descarga la versión nativa para usuarios de macOS.",
                 macBoxTitle: "🍏 USUARIOS macOS",
                 macBoxDesc: "Descarga el paquete para Mac. Instalación rápida e inmediata con un solo clic.",
-                dlWinBtn: "📥 DESCARGAR .EXE",
-                dlMacBtn: "📥 DESCARGAR .DMG",
-                stBox: "🔒 Paquete protegido: Distribución nativa directa para Windows y macOS.",
+                dlMacBtn: "📥 DESCARGAR MAC APP",
+                stBox: "🔒 Paquete protegido: Distribución nativa directa para macOS.",
                 secTitle: "LOS CUATRO OPERATIVOS",
-                gameHint: "🎮 Estado del sistema: Descarga directa multiplataforma activa.",
+                gameHint: "🎮 Estado del sistema: Descarga directa de macOS activa.",
                 fsBtn: "🖥️ Pantalla Completa",
 
                 bRole: "INFILTRADA DE SEÑALES // ARCHIVO LIBRE DE BOLONIA",
@@ -552,11 +515,8 @@
             document.getElementById('st-title').innerText = t.stTitle;
             document.getElementById('st-desc').innerText = t.stDesc;
             
-            document.getElementById('win-box-title').innerText = t.winBoxTitle;
-            document.getElementById('win-box-desc').innerText = t.winBoxDesc;
             document.getElementById('mac-box-title').innerText = t.macBoxTitle;
             document.getElementById('mac-box-desc').innerText = t.macBoxDesc;
-            document.getElementById('dl-win-btn').innerText = t.dlWinBtn;
             document.getElementById('dl-mac-btn').innerText = t.dlMacBtn;
 
             document.getElementById('st-box').innerText = t.stBox;
